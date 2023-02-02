@@ -14,7 +14,7 @@ const auth = expressjwt({
     algorithms: ["HS256"],
   });  
   // la orute pour crée un snippet avec une authentification obligatoire
-  router.post('/snippetFactory', auth, async(req,res,next)=>{
+  router.post('/snippets', auth, async(req,res,next)=>{
     let snippetData;
     snippetData = snippetValidation.parse(req.body)
     
@@ -33,6 +33,13 @@ const auth = expressjwt({
           id : req.auth.id
         }
       },
+      tags:{
+        connect:
+          snippetData.tags.map((id)=>{
+            return {id}
+          })
+        
+      }
     }
 
     })
