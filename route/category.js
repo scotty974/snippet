@@ -24,9 +24,29 @@ router.post('/category', auth, async(req,res,next)=>{
     }
   }).then((category)=>{
     res.json({"Vous avez crée la catégorie :" : {category}})
-  })
+  }) 
 })
   
+
+router.delete('/category/:id', auth ,async (req,res,next)=>{
+    const cateDeleteId = parseInt(req.params.id);
+    let category = await prisma.categories.findUnique({
+      where:{
+        id : cateDeleteId,
+      },
+    });
+    if(!category){ 
+      return res.status(404).json({msg : "Categories not found"})
+    }
+
+    const categorie =  await prisma.categories.delete({
+      where:{
+        id : category.id  
+        
+      }
+    })
+    res.json({msg : "Category delete", categorie})
+})
 
 
 

@@ -26,9 +26,9 @@ model Snippets{
   createDate DateTime @default(now())
   updateAT DateTime @updatedAt
   user_id Int
-  category_id Int
+  category_id Int?
   user Users @relation(fields: [user_id], references: [id])
-  category Categories @relation(fields: [category_id], references: [id])
+  category Categories? @relation(fields: [category_id], references: [id])
   tags Tags[]
 }
 model Categories{
