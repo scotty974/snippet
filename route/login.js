@@ -15,7 +15,7 @@ const auth = expressjwt({
     algorithms: ["HS256"],
   }); 
 
-  
+
 router.post('/login', async (req,res,next)=>{
     let logindata;
     try{
@@ -31,9 +31,9 @@ const user = await prisma.users.findFirst({
         email:logindata.email
     },
 })
-
+// on verifie si le mot de passe est bon 
 if(!user) return next(createError(403,"Mauvais Email/mot de passe"))
-
+// on vas haser le mot de passe
 const passwordIsGood = await bcrypt.compare(logindata.password, user.password)
 
 if(!passwordIsGood) return next(createError(403, "Mauvais email/mot de passe"))

@@ -13,7 +13,7 @@ const auth = expressjwt({
     secret: process.env["JWT_KEY"],
     algorithms: ["HS256"],
   });  
-  // la orute pour crée un snippet avec une authentification obligatoire
+  // la route pour crée un snippet avec une authentification obligatoire
   router.post('/snippets', auth, async(req,res,next)=>{
     let snippetData;
     snippetData = snippetValidation.parse(req.body)
@@ -78,7 +78,7 @@ const auth = expressjwt({
     })
     res.json(newSnippet)
   })
-
+// la route pour supprimer un snippet avec un id 
 router.delete('/snippets/:id', auth, async(req,res, next)=>{
   const snipetDeletId = parseInt(req.params.id);
   console.log(snipetDeletId)

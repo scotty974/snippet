@@ -13,7 +13,7 @@ const auth = expressjwt({
     secret: process.env["JWT_KEY"],
     algorithms: ["HS256"],
   });  
-
+// route pour crée une catégorie 
 router.post('/category', auth, async(req,res,next)=>{
     let categoryData;
     categoryData = catValidation.parse(req.body);
@@ -27,18 +27,20 @@ router.post('/category', auth, async(req,res,next)=>{
   }) 
 })
   
-
+// la route pour supprimer une catégorie  
 router.delete('/category/:id', auth ,async (req,res,next)=>{
+  // on récupére l'id 
     const cateDeleteId = parseInt(req.params.id);
     let category = await prisma.categories.findUnique({
       where:{
         id : cateDeleteId,
       },
     });
+    // on va vérifier si la catégorie existe
     if(!category){ 
       return res.status(404).json({msg : "Categories not found"})
     }
-
+    // on supprime la catégorie
     const categorie =  await prisma.categories.delete({
       where:{
         id : category.id   
