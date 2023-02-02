@@ -15,6 +15,7 @@ const auth = expressjwt({
     algorithms: ["HS256"],
   }); 
 
+  
 router.post('/login', async (req,res,next)=>{
     let logindata;
     try{

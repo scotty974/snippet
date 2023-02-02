@@ -41,7 +41,7 @@ router.delete('/category/:id', auth ,async (req,res,next)=>{
 
     const categorie =  await prisma.categories.delete({
       where:{
-        id : category.id  
+        id : category.id   
         
       }
     })

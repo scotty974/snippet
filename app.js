@@ -18,13 +18,13 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors());
 const port = 3500
-
-  app.use('/register', register)
-  app.use('/login', login)
-  app.use('/modify',modifypassword)
-  app.use('/snippets',snippetFactory)
-  app.use('/category', cattegory)
-  app.use('/tags', tags)
+// toute les routes
+  app.use('/', register)
+  app.use('/', login)
+  app.use('/',modifypassword)
+  app.use('/',snippetFactory)
+  app.use('/', cattegory)
+  app.use('/', tags)
 // run the server 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);

@@ -68,14 +68,35 @@ const auth = expressjwt({
             id : req.auth.id
           }
         },
-        
+        tags:{
+          connect:{
+            id : snippetData.id
+          }
+        }
       }
       
     })
     res.json(newSnippet)
   })
 
-
+router.delete('/snippets/:id', auth, async(req,res, next)=>{
+  const snipetDeletId = parseInt(req.params.id);
+  console.log(snipetDeletId)
+  let snippet = await prisma.snippets.findFirst({
+    where:{
+      id : snipetDeletId
+    }
+  });
+  if(!snippet){
+    return res.status(404).json({msg : "Snippet not found"})
+  }
+  const snipet = await prisma.snippets.delete({
+    where:{
+      id : snippet.id
+    }
+  })
+  res.json({msg : "Snippet delete : ",snipet})
+})
 
 
 
