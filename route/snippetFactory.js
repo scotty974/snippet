@@ -13,6 +13,21 @@ const auth = expressjwt({
     secret: process.env["JWT_KEY"],
     algorithms: ["HS256"],
   });  
+
+  router.get('/snippets/:id', auth, async(req,res,next)=>{
+    let snippet_id = parseInt(req.params.id)
+     let snippet = await prisma.snippets.findFirst({
+      where:{
+        id: snippet_id,
+        user_id: req.auth.id
+      }
+     })
+     res.json(snippet)
+  })
+
+
+
+
   // la route pour crée un snippet avec une authentification obligatoire
   router.post('/snippets', auth, async(req,res,next)=>{
     let snippetData;
@@ -46,7 +61,7 @@ const auth = expressjwt({
     res.json(snipet) 
   })
  // route pour modifier un snippet 
-  router.patch('/:id', auth, async (req,res,next)=>{
+  router.patch('/snippets/:id', auth, async (req,res,next)=>{
     let snippetData;
      const newSnippet = snippetData = snippetValidation.parse(req.body)
 

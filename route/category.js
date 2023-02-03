@@ -13,8 +13,17 @@ const auth = expressjwt({
     secret: process.env["JWT_KEY"],
     algorithms: ["HS256"],
   });  
+
+  router.get('/categories/:id',auth,async (req,res,next)=>{
+    let category_id = parseInt(req.params.id);
+    let categorie = await prisma.categories.findFirst({
+      id : category_id
+    })
+    res.json(categorie)
+  })
+
 // route pour crée une catégorie 
-router.post('/category', auth, async(req,res,next)=>{
+router.post('/categories', auth, async(req,res,next)=>{
     let categoryData;
     categoryData = catValidation.parse(req.body);
   
@@ -28,12 +37,13 @@ router.post('/category', auth, async(req,res,next)=>{
 })
   
 // la route pour supprimer une catégorie  
-router.delete('/category/:id', auth ,async (req,res,next)=>{
+router.delete('/categories/:id', auth ,async (req,res,next)=>{
   // on récupére l'id 
     const cateDeleteId = parseInt(req.params.id);
     let category = await prisma.categories.findUnique({
       where:{
         id : cateDeleteId,
+      
       },
     });
     // on va vérifier si la catégorie existe

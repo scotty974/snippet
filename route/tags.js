@@ -13,6 +13,9 @@ const auth = expressjwt({
     algorithms: ["HS256"],
   });  
 
+
+
+
 router.post('/tags', auth, async (req,res,next)=>{
    let tagsData;
    tagsData = tagValidator.parse(req.body)

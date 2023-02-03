@@ -15,7 +15,7 @@ const auth = expressjwt({
     algorithms: ["HS256"],
   }); 
 // la route poir modifier le mot de passe 
-router.patch('/modify', async (req,res, next)=>{
+router.patch('/password', async (req,res, next)=>{
     let modifyData
     try{
         modifyData = registerValidation.parse(req.body)
